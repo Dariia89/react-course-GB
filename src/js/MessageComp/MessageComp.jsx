@@ -1,8 +1,10 @@
 import React from 'react'
 import './MessageComp.scss'
 
-function MessageComp({ text }) {
-    
+function MessageComp({ message }) {
+
+    const { user, text } = message;
+
     const getDate = () => {
         let today = new Date(),
             d = String(today.getDate()),
@@ -15,18 +17,24 @@ function MessageComp({ text }) {
 
     const checkDateLength = (item) => {
         if (item.length === 1) {
-
             return '0' + item;
         } else {
             return item;
         }
     }
 
+    const isBot = () => {
+        return user === 'Бот';
+    }
+
     return (
-        <div className="message">
-            { text } 
-            <span className="date">{ getDate() }</span>
-        </div>
+        <>
+            <div className="message">
+                <span className={isBot() ? 'bot' : 'user-name'}>{ user }</span><br />
+                { text } 
+                <span className="date">{ getDate() }</span>
+            </div>
+        </>   
     )
 }
 
