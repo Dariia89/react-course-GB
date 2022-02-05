@@ -6,10 +6,10 @@ const useStyles = makeStyles(() => {
     item: {
       width: "100px",
       "&.Mui-selected": {
-        backgroundColor: "lightsteelblue",
+        backgroundColor: "blue",
       },
       "&.Mui-selected:hover": {
-        backgroundColor: "lightsteelblue",
+        backgroundColor: "blue",
       },
     },
   };

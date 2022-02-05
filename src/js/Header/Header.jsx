@@ -7,8 +7,13 @@ import {
   Toolbar,
   Box,
   AppBar,
+  Checkbox,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import { useContext } from "react";
+import { ThemeContext } from '../../context';
+import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
+import NightlightOutlinedIcon from '@mui/icons-material/NightlightOutlined';
 
 const useStyles = makeStyles(() => {
   return {
@@ -29,13 +34,18 @@ const pages = [
 
 export function Header() {
   const s = useStyles();
-
+  const { themeSetter, theme } = useContext(ThemeContext);
+  
   return (
-    <AppBar position="static" color="secondary">
+    <AppBar position="static" color="primary">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "flex" } }}>
+            <Checkbox
+              icon={<NightlightOutlinedIcon color="white" />}
+              checkedIcon={<LightModeOutlinedIcon color="white" />}
+              onClick={() => themeSetter(theme.name === 'dark' ? 'light' : 'dark')}
+            />
             {pages.map(({ to, title }) => (
               <Button
                 key={title}

@@ -25,7 +25,7 @@ function ChatsPage() {
           <Route
             path="/"
             element={
-                <div className="wrapper">
+                <div className='wrapper'>
                     <Chats />
                     <p style={{margin: '40px auto'}}>Выберите чат...</p>
                 </div>
@@ -34,7 +34,7 @@ function ChatsPage() {
           <Route
             path=":chatId"
             element={
-                <div className="wrapper">
+                <div className='wrapper'>
                     <Chats />
                     <Messages />
                 </div>

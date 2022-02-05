@@ -1,0 +1,10 @@
+.user-info_container {
+    & span {
+        font-weight: bold;
+    }
+}
+
+.profile-container {
+    display: flex;
+    justify-content: space-around;
+}

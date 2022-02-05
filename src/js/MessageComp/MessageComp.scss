@@ -1,18 +1,18 @@
 .message {
     width: 350px;
     position: relative;
-    background-color: lightsteelblue;
+    background-color: rgb(90, 107, 182);
     padding: 10px 10px 20px 10px;
     margin: auto 0 10px 0;
     border: none;
     border-radius: 10px;
     & .user-name {
         font-weight: bold;
-        color: darkslateblue;
+        color: rgb(228, 217, 70);
     }
     & .bot-name {
         font-weight: bold;
-        color: crimson;
+        color: rgb(60, 224, 82);
     }
     & .date {
         position: absolute;
