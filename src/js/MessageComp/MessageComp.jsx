@@ -3,7 +3,6 @@ import './MessageComp.scss'
 import PropTypes from 'prop-types'
 
 function MessageComp({ message, msgClass }) {
-
     const { user, text } = message;
 
     const getDate = () => {
@@ -32,7 +31,7 @@ function MessageComp({ message, msgClass }) {
         <>
             <div className={`message ${msgClass}`}>
                 <span className={isBot() ? 'bot-name' : 'user-name'}>{ user }</span><br />
-                { text } 
+                { text }
                 <span className="date">{ getDate() }</span>
             </div>
         </>   
