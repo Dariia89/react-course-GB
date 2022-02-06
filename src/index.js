@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { store } from './store';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { store, persistor } from './store';
+import { PersistGate } from "redux-persist/integration/react";import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import CustomThemeProvider from './context';
 import './index.scss';
 import { Header } from './js/Header/Header';
@@ -12,6 +12,7 @@ import { ProfilePage } from './js/Pages/ProfilePage/ProfilePage';
 ReactDOM.render(
   <React.StrictMode>
    <Provider store={store}>
+   <PersistGate persistor={persistor}>
     <CustomThemeProvider>
       <BrowserRouter>
         <Header />
@@ -24,6 +25,7 @@ ReactDOM.render(
         </Routes>
       </BrowserRouter>
      </CustomThemeProvider>
+     </PersistGate>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
