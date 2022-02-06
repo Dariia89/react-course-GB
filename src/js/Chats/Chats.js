@@ -8,7 +8,6 @@ import { chatsSelector, createChat, deleteChat } from "../../store/chats";
 export const Chats = () => {
   const { chatId } = useParams();
   const chats = useSelector(chatsSelector);
-  console.log('!!', chats);
   const dispatch = useDispatch();
 
   const createChatByName = useCallback(
@@ -17,7 +16,6 @@ export const Chats = () => {
     const isValidName = !chats.includes(name);
     if (name && isValidName) {
       dispatch(createChat(name));
-      console.log('hi');
     } else {
       alert('Невалидное название');
     }
