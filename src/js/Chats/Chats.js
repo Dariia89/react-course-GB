@@ -1,12 +1,34 @@
 import { Button, List } from "@mui/material";
-import { useState } from "react";
+import { useCallback } from "react";
 import { Chat } from "../Chat/Chat";
 import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { chatsSelector, createChat, deleteChat } from "../../store/chats";
 
 export const Chats = () => {
-  const [chats, setChats] = useState(['chat1', 'chat2', 'chat3', 'chat4']);
-
   const { chatId } = useParams();
+  const chats = useSelector(chatsSelector);
+  console.log('!!', chats);
+  const dispatch = useDispatch();
+
+  const createChatByName = useCallback(
+    () => {
+    const name = prompt('Введите название чата');
+    const isValidName = !chats.includes(name);
+    if (name && isValidName) {
+      dispatch(createChat(name));
+      console.log('hi');
+    } else {
+      alert('Невалидное название');
+    }
+  }, [chats, dispatch]);
+
+  const deleteChatByName = useCallback(
+    (chat) => {
+      dispatch(deleteChat(chat));
+    },
+    [dispatch]
+  );
 
   return (
     <List component="nav">
@@ -16,10 +38,11 @@ export const Chats = () => {
             key={`chat${i}`}
             title={chat}
             selected={chatId === chat}
+            deleteChatByName={deleteChatByName}
           />
         </Link>
       ))}
-      <Button onClick={() => setChats([...chats, `chat${chats.length + 1}`])}>
+      <Button onClick={createChatByName}>
         +   
       </Button>
     </List>

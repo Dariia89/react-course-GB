@@ -3,6 +3,9 @@ import { FormControl, FormHelperText, Input, InputAdornment } from '@mui/materia
 import { Send } from '@mui/icons-material';
 import { useParams } from 'react-router-dom';
 import MessageComp from '../MessageComp/MessageComp';
+import { useDispatch, useSelector } from 'react-redux';
+import { messagesSelectorByChatId } from '../../store/messages/selectors';
+import { sendMessage } from '../../store/messages';
 
 const botMessages = {
     welcome: {
@@ -54,14 +57,12 @@ const botMessages = {
 
 function Messages() {
     const { chatId } = useParams();
-    console.log(chatId);
     const ref = useRef(null);
     const focusInput = useRef(null);
+    const dispatch = useDispatch();
 
     const [text, setText] = useState('');
-    const [isWelcome, setIsWelcome] = useState(false);
-    const [messages, setMessages] = useState({});
-
+    const messages = useSelector(messagesSelectorByChatId(chatId));
 
     const handleScrollBottom = useCallback(() => {
         if (ref.current) {
@@ -98,30 +99,22 @@ function Messages() {
     }, []);
 
     useEffect(() => {
-        setMessages([]);
         focusInput.current?.focus();
-        setIsWelcome(true);
-    }, []);
+    }, [dispatch, chatId]);
 
     useEffect(() => {
-        const msgs = messages[chatId] ?? [];
-        const lastMessage = msgs[msgs.length - 1];
+        const lastMessage = messages[messages.length - 1];
         let timerId = null;
     
-        if (msgs.length && lastMessage.user !== "Бот") {
+        if (messages.length && lastMessage.user !== "Бот") {
           timerId = setTimeout(() => {
-            setMessages({
-              ...messages,
-              [chatId]: [
-                ...(messages[chatId] ?? []), 
-                findAnswer(lastMessage.text),
-              ],
-            });
+            const botAnswer = findAnswer(lastMessage.text);
+            dispatch(sendMessage(botAnswer, chatId));
           }, 1000);
         }
 
         return () => clearInterval(timerId);
-    }, [messages, findAnswer, chatId]);
+    }, [messages, findAnswer, chatId, dispatch]);
 
     useEffect(() => {
         handleScrollBottom();
@@ -132,18 +125,12 @@ function Messages() {
         if (!text) {
             return;
         }
-        setMessages((state) => ({
-            ...state, 
-            [chatId]: [
-                ...(state[chatId] ?? []), 
-                {
-                    user: 'Пользователь',
-                    text
-                },
-            ],
-        }));
+        dispatch(sendMessage({
+            user: 'Пользователь',
+            text
+        }, chatId));
         setText('');
-        }, [chatId]
+        }, [chatId, dispatch]
     );
 
     const handlePressInput = ({ code }) => {
@@ -152,8 +139,6 @@ function Messages() {
         }
       };
     
-    const msgs = messages[chatId] ?? [];
-
   return (
     <div className="form">
         <FormControl sx={{ m: '24px auto 20px auto', width: '100ch' }} variant="standard">
@@ -162,7 +147,6 @@ function Messages() {
                 value={text}
                 inputRef={focusInput}
                 onChange={(e) => setText(e.target.value)}
-                endAdornment={<InputAdornment position="end">{text && <Send onClick={ handleSubmit(text) } />}</InputAdornment>}
                 aria-describedby="text"
                 onKeyPress={handlePressInput}
                 inputProps={{
@@ -174,10 +158,9 @@ function Messages() {
         </FormControl>
 
         <div ref={ref} className="messages-container">
-            {isWelcome && <MessageComp message={botMessages.welcome} />}
-                { msgs.map((m, i) => {
+                { messages.map((m, i) => {
                     return (
-                        <MessageComp msgClass={m.user === 'Пользователь' ? 'user' : 'bot'} key={ `message${i}` } message={ m } />
+                        <MessageComp chatId={chatId} msgClass={m.user === 'Пользователь' ? 'user' : 'bot'} key={ `message${i}` } message={ m } />
                     )
             }) }
         </div>
