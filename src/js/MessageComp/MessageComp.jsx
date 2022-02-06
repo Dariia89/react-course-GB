@@ -1,9 +1,13 @@
-import React from 'react'
-import './MessageComp.scss'
-import PropTypes from 'prop-types'
+import React from 'react';
+import './MessageComp.scss';
+import '../App.scss';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { deleteMessage } from '../../store/messages';
 
-function MessageComp({ message, msgClass }) {
+function MessageComp({ message, msgClass, chatId }) {
     const { user, text } = message;
+    const dispatch = useDispatch();
 
     const getDate = () => {
         let today = new Date(),
@@ -30,6 +34,7 @@ function MessageComp({ message, msgClass }) {
     return (
         <>
             <div className={`message ${msgClass}`}>
+                <span className="delete" onClick={() => dispatch(deleteMessage(message?.id, chatId))}>X</span>
                 <span className={isBot() ? 'bot-name' : 'user-name'}>{ user }</span><br />
                 { text }
                 <span className="date">{ getDate() }</span>

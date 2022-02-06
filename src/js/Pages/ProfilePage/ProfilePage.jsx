@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Checkbox from '@mui/material/Checkbox';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
-import { toggleVisible } from "../../../store/profile";
+import { profileSelector, toggleVisible } from "../../../store/profile";
 import './ProfilePage.scss';
 import ProfileForm from "../../ProfileForm/ProfileForm";
 
@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => {
 
 export const ProfilePage = () => {
   const s = useStyles();
-  const profile = useSelector((state) => state.profile);
+  const profile = useSelector(profileSelector);
   const dispatch = useDispatch();
 
     return (
