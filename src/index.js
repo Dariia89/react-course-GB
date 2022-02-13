@@ -8,6 +8,7 @@ import './index.scss';
 import { Header } from './js/Header/Header';
 import ChatsPage from './js/Pages/ChatsPage/ChatsPage';
 import { ProfilePage } from './js/Pages/ProfilePage/ProfilePage';
+import { GistsPage } from './js/Pages/GistsPage/GistsPage';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -20,8 +21,9 @@ ReactDOM.render(
         <Routes>
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/chat/*" element={<ChatsPage />} />
+          <Route path="/gist" element={<GistsPage />} />
           <Route path="/" element={<h1>Home page</h1>} />
-          <Route path="/*" element={<h1>404 Not Found</h1>} />
+          <Route path="*" element={<h1>404 Not Found</h1>} />
         </Routes>
       </BrowserRouter>
      </CustomThemeProvider>

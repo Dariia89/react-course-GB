@@ -27,9 +27,10 @@ const useStyles = makeStyles(() => {
 });
 
 const pages = [
-  { title: "Home", to: "/" },
-  { title: "Chat", to: "/chat" },
-  { title: "Profile", to: "/profile" },
+  { title: 'Home', to: '/' },
+  { title: 'Chat', to: '/chat' },
+  { title: 'Profile', to: '/profile' },
+  { title: 'Gist', to: '/gist'},
 ];
 
 export function Header() {
