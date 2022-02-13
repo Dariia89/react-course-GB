@@ -17,7 +17,7 @@ export const messagessReducer = (state = initialState, action) => {
                 ...state.messages,
                 [action.payload.chatId]: [
                     ...(state.messages[action.payload.chatId] ?? []),
-                    { ...action.payload.newMessage, id: Math.floor(Math.random() * 10000) },
+                    { ...action.payload.message, id: Math.floor(Math.random() * 10000) },
                 ],
             },
         };
